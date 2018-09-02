@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   Modal,
@@ -9,17 +9,15 @@ import {
   ViewPropTypes,
   FlatList,
   Dimensions
-} from "react-native";
-import { connectStyle } from "native-base-shoutem-theme";
-import { Text } from "./Text";
-import { Button } from "./Button";
-import { ViewNB } from "./View";
-import { Icon } from "./Icon";
-import { Left } from "./Left";
-import { Right } from "./Right";
-import { Body } from "./Body";
-import { ListItem } from "./ListItem";
-import mapPropsToStyleNames from "../utils/mapPropsToStyleNames";
+} from 'react-native';
+import { connectStyle } from 'native-base-shoutem-theme';
+import { Text } from './Text';
+import { Icon } from './Icon';
+import { Left } from './Left';
+import { Right } from './Right';
+import { Body } from './Body';
+import { ListItem } from './ListItem';
+import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 
 class ActionSheetContainer extends Component {
   constructor(props) {
@@ -29,20 +27,22 @@ class ActionSheetContainer extends Component {
       items: []
     };
   }
+
   static actionsheetInstance;
+
   static show(config, callback) {
     this.actionsheetInstance._root.showActionSheet(config, callback);
   }
-  static hide(){
+
+  static hide() {
     this.actionsheetInstance._root.hideActionSheet();
   }
+
   showActionSheet(config, callback) {
-    if (Platform.OS === "ios") {
-      if (typeof config.options[0] == "object") {
-        let options = config.options;
-        let filtered = options.map(item => {
-          return item.text;
-        });
+    if (Platform.OS === 'ios') {
+      if (typeof config.options[0] === 'object') {
+        const options = config.options;
+        const filtered = options.map(item => item.text);
         config.options = filtered;
         ActionSheetIOS.showActionSheetWithOptions(config, callback);
       } else {
@@ -56,25 +56,26 @@ class ActionSheetContainer extends Component {
         destructiveButtonIndex: config.destructiveButtonIndex,
         cancelButtonIndex: config.cancelButtonIndex,
         modalVisible: true,
-        callback: callback
+        callback
       });
     }
   }
 
-  hideActionSheet(){
+  hideActionSheet() {
     this.setState({ modalVisible: false });
   }
 
   componentDidMount() {
     if (!this.props.autoHide && this.props.duration) {
-      console.warn(`It's not recommended to set autoHide false with duration`);
+      console.warn("It's not recommended to set autoHide false with duration");
     }
   }
+
   render() {
     return (
       <Modal
-        animationType={"fade"}
-        transparent={true}
+        animationType="fade"
+        transparent
         visible={this.state.modalVisible}
         onRequestClose={() => {
           this.state.callback(this.state.cancelButtonIndex);
@@ -88,25 +89,24 @@ class ActionSheetContainer extends Component {
             this.setState({ modalVisible: false });
           }}
           style={{
-            backgroundColor: "rgba(0,0,0,0.4)",
+            backgroundColor: 'rgba(0,0,0,0.4)',
             flex: 1,
-            justifyContent: "flex-end"
+            justifyContent: 'flex-end'
           }}
         >
           <TouchableOpacity
             activeOpacity={1}
             style={{
-              backgroundColor: "#fff",
+              backgroundColor: '#fff',
               minHeight: 56,
               height: this.state.length * 80,
-              maxHeight: Dimensions.get("window").height / 2,
+              maxHeight: Dimensions.get('window').height / 2,
               padding: 15,
-              elevation: 4
+              elevation: 4,
+              ...this.props.containerStyle
             }}
           >
-            {this.state.title ? (
-              <Text style={{ color: "#757575" }}>{this.state.title}</Text>
-            ) : null}
+            {this.state.title ? <Text style={{ color: '#757575' }}>{this.state.title}</Text> : null}
             <FlatList
               style={{
                 marginHorizontal: -15,
@@ -114,16 +114,16 @@ class ActionSheetContainer extends Component {
               }}
               data={this.state.items}
               keyExtractor={(item, index) => String(index)}
-              renderItem={({ index, item }) => {
-                return typeof this.state.items[0] === "string" ? (
+              renderItem={({ index, item }) =>
+                typeof this.state.items[0] === 'string' ? (
                   <ListItem
                     onPress={() => {
                       this.state.callback(parseInt(index));
                       this.setState({ modalVisible: false });
                     }}
-                    style={{ borderColor: "transparent", marginLeft: 14 }}
+                    style={{ borderColor: 'transparent', marginLeft: 14 }}
                   >
-                    <Text>{item}</Text>
+                    <Text style={this.props.textStyle}>{item}</Text>
                   </ListItem>
                 ) : (
                   <ListItem
@@ -132,7 +132,7 @@ class ActionSheetContainer extends Component {
                       this.setState({ modalVisible: false });
                     }}
                     style={{
-                      borderColor: "transparent",
+                      borderColor: 'transparent',
                       marginLeft: 14,
                       height: 50
                     }}
@@ -146,15 +146,13 @@ class ActionSheetContainer extends Component {
                         }}
                       />
                     </Left>
-                    <Body
-                      style={{ borderColor: "transparent", paddingLeft: 7 }}
-                    >
-                      <Text>{item.text}</Text>
+                    <Body style={{ borderColor: 'transparent', paddingLeft: 7 }}>
+                      <Text style={this.props.textStyle}>{item.text}</Text>
                     </Body>
                     <Right />
                   </ListItem>
-                );
-              }}
+                )
+              }
             />
           </TouchableOpacity>
         </TouchableOpacity>
@@ -165,15 +163,11 @@ class ActionSheetContainer extends Component {
 
 ActionSheetContainer.propTypes = {
   ...ViewPropTypes,
-  style: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.number,
-    PropTypes.array
-  ])
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
 };
 
 const StyledActionSheetContainer = connectStyle(
-  "NativeBase.ActionSheetContainer",
+  'NativeBase.ActionSheetContainer',
   {},
   mapPropsToStyleNames
 )(ActionSheetContainer);

@@ -56,6 +56,10 @@ class ActionSheetContainer extends Component {
         destructiveButtonIndex: config.destructiveButtonIndex,
         cancelButtonIndex: config.cancelButtonIndex,
         modalVisible: true,
+        containerStyle: config.containerStyle,
+        textStyle: config.textStyle,
+        titleStyle: config.titleStyle,
+        touchableBackground: config.touchableBackground,
         callback
       });
     }
@@ -103,10 +107,12 @@ class ActionSheetContainer extends Component {
               maxHeight: Dimensions.get('window').height / 2,
               padding: 15,
               elevation: 4,
-              ...this.props.containerStyle
+              ...this.state.containerStyle
             }}
           >
-            {this.state.title ? <Text style={{ color: '#757575' }}>{this.state.title}</Text> : null}
+            {this.state.title ? (
+              <Text style={this.state.titleStyle}>{this.state.title}</Text>
+            ) : null}
             <FlatList
               style={{
                 marginHorizontal: -15,
@@ -117,16 +123,18 @@ class ActionSheetContainer extends Component {
               renderItem={({ index, item }) =>
                 typeof this.state.items[0] === 'string' ? (
                   <ListItem
+                    background={this.state.touchableBackground}
                     onPress={() => {
                       this.state.callback(parseInt(index));
                       this.setState({ modalVisible: false });
                     }}
                     style={{ borderColor: 'transparent', marginLeft: 14 }}
                   >
-                    <Text style={this.props.textStyle}>{item}</Text>
+                    <Text style={this.state.textStyle}>{item}</Text>
                   </ListItem>
                 ) : (
                   <ListItem
+                    background={this.state.touchableBackground}
                     onPress={() => {
                       this.state.callback(parseInt(index));
                       this.setState({ modalVisible: false });
@@ -147,7 +155,7 @@ class ActionSheetContainer extends Component {
                       />
                     </Left>
                     <Body style={{ borderColor: 'transparent', paddingLeft: 7 }}>
-                      <Text style={this.props.textStyle}>{item.text}</Text>
+                      <Text style={this.state.textStyle}>{item.text}</Text>
                     </Body>
                     <Right />
                   </ListItem>

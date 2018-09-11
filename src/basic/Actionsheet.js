@@ -58,6 +58,7 @@ class ActionSheetContainer extends Component {
         modalVisible: true,
         containerStyle: config.containerStyle,
         textStyle: config.textStyle,
+        cancelButtonStyle: config.cancelButtonStyle,
         titleStyle: config.titleStyle,
         touchableBackground: config.touchableBackground,
         callback
@@ -130,7 +131,14 @@ class ActionSheetContainer extends Component {
                     }}
                     style={{ borderColor: 'transparent', marginLeft: 14 }}
                   >
-                    <Text style={this.state.textStyle}>{item}</Text>
+                    <Text
+                      style={[
+                        this.state.textStyle,
+                        this.state.cancelButtonIndex === index && this.state.cancelButtonStyle
+                      ]}
+                    >
+                      {item}
+                    </Text>
                   </ListItem>
                 ) : (
                   <ListItem
@@ -155,7 +163,14 @@ class ActionSheetContainer extends Component {
                       />
                     </Left>
                     <Body style={{ borderColor: 'transparent', paddingLeft: 7 }}>
-                      <Text style={this.state.textStyle}>{item.text}</Text>
+                      <Text
+                        style={[
+                          this.state.textStyle,
+                          this.state.cancelButtonIndex === index && this.state.cancelButtonStyle
+                        ]}
+                      >
+                        {item.text}
+                      </Text>
                     </Body>
                     <Right />
                   </ListItem>

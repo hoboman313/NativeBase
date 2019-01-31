@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { connectStyle } from 'native-base-shoutem-theme';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
@@ -11,6 +9,11 @@ class IconNB extends Component {
   static contextTypes = {
     theme: PropTypes.object
   };
+
+  constructor(props) {
+    super(props);
+    this.setIcon(props.type);
+  }
 
   setIcon(iconType) {
     if (iconType == undefined && this.context.theme) {
@@ -25,12 +28,9 @@ class IconNB extends Component {
     }
   }
 
-  componentWillMount() {
-    this.setIcon(this.props.type);
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.type && this.props.type != nextProps.type) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillUpdate(nextProps) {
+    if (nextProps.type && this.props.type !== nextProps.type) {
       this.setIcon(nextProps.type);
     }
   }

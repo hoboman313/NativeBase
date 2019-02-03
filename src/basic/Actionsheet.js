@@ -100,11 +100,11 @@ class ActionSheetContainer extends Component {
             this.setState({ modalVisible: false });
           }}
           style={[styles.containerTouchable,
-              ...this.state.containerStyle]}
+              this.state.containerStyle]}
         >
-          <TouchableOpacity activeOpacity={1} style={styles.innerTouchable}>
+          <TouchableOpacity activeOpacity={1} style={[styles.innerTouchable, this.state.containerStyle]}>
             {this.state.title ? (
-              <Text style={[styles.touchableText, ...this.state.titleStyle]}>{this.state.title}</Text>
+              <Text style={[styles.touchableText, this.state.titleStyle]}>{this.state.title}</Text>
             ) : null}
             <FlatList
               style={[

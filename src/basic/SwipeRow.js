@@ -1,14 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Animated, PanResponder, View } from 'react-native';
-import { connectStyle } from 'native-base-shoutem-theme';
-
-import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
-
-import { Left } from './Left';
-import { Right } from './Right';
-import { Body } from './Body';
-import { ListItem } from './ListItem';
+import React, { Component } from "react";
+import { Animated, PanResponder, View } from "react-native";
+import { connectStyle } from "native-base-shoutem-theme";
+import { Left } from "./Left";
+import { Right } from "./Right";
+import { Body } from "./Body";
+import { ListItem } from "./ListItem";
+import mapPropsToStyleNames from "../utils/mapPropsToStyleNames";
 
 const PREVIEW_OPEN_DELAY = 700;
 const PREVIEW_CLOSE_DELAY = 300;
@@ -213,23 +210,40 @@ class SwipeRow extends Component {
     // We don't want the onLayout func to run after it runs once.
     if (this.state.dimensionsSet) {
       return (
-        <Animated.View
-          {...this._panResponder.panHandlers}
-          style={{
-            transform: [{ translateX: this._translateX }],
-            zIndex: 2
-          }}
-        >
-          {!this.props.list ? (
-            <ListItem list style={this.props.style}>
-              {this.props.body}
-            </ListItem>
-          ) : (
-            <View style={[{ backgroundColor: '#FFF' }, this.props.style]}>
-              {this.props.body}
-            </View>
-          )}
-        </Animated.View>
+				<Animated.View
+					{...this._panResponder.panHandlers}
+					style={{
+  transform: [{ translateX: this._translateX }],
+  zIndex: 2,
+}}
+				>
+					{!this.props.list
+						? <ListItem list style={this.props.listStyle}>
+								{this.props.body}
+							</ListItem>
+						: <View style={[{ backgroundColor: '#FFF' },this.props.listStyle]}>
+								{this.props.body}
+							</View>}
+				</Animated.View>
+      );
+    } else {
+      return (
+				<Animated.View
+					{...this._panResponder.panHandlers}
+					onLayout={e => this.onContentLayout(e)}
+					style={{
+  transform: [{ translateX: this._translateX }],
+  zIndex: 2,
+}}
+				>
+					{!this.props.list
+						? <ListItem list style={this.props.listStyle}>
+								{this.props.body}
+							</ListItem>
+						: <View style={[{ backgroundColor: '#FFF' },this.props.listStyle]}>
+								{this.props.body}
+							</View>}
+				</Animated.View>
       );
     }
     return (

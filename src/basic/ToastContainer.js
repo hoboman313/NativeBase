@@ -117,10 +117,7 @@ class ToastContainer extends Component {
     // Set the toast to close after the duration.
     if (config.duration !== 0) {
       const duration = config.duration > 0 ? config.duration : 1500;
-      this.closeTimeout = setTimeout(
-        this.closeToast.bind(this, 'timeout'),
-        duration
-      );
+      this.closeTimeout = setTimeout(this.closeToast.bind(this, "timeout"), duration);
     }
     // Fade the toast in now.
     Animated.timing(this.state.fadeAnim, {
@@ -157,13 +154,8 @@ class ToastContainer extends Component {
           >
             <Text style={this.state.textStyle}>{this.state.text}</Text>
             {this.state.buttonText && (
-              <Button
-                style={this.state.buttonStyle}
-                onPress={() => this.closeToast('user')}
-              >
-                <Text style={this.state.buttonTextStyle}>
-                  {this.state.buttonText}
-                </Text>
+              <Button style={this.state.buttonStyle} onPress={() => this.closeToast("user")}>
+                <Text style={{ color: "#007aff", ...this.state.buttonTextStyle }}>{this.state.buttonText}</Text>
               </Button>
             )}
           </Toast>
@@ -176,17 +168,9 @@ class ToastContainer extends Component {
 
 ToastContainer.propTypes = {
   ...ViewPropTypes,
-  style: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.number,
-    PropTypes.array
-  ])
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
 };
 
-const StyledToastContainer = connectStyle(
-  'NativeBase.ToastContainer',
-  {},
-  mapPropsToStyleNames
-)(ToastContainer);
+const StyledToastContainer = connectStyle("NativeBase.ToastContainer", {}, mapPropsToStyleNames)(ToastContainer);
 
 export { StyledToastContainer as ToastContainer };

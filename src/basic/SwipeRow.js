@@ -4,7 +4,6 @@ import { connectStyle } from "native-base-shoutem-theme";
 import { Left } from "./Left";
 import { Right } from "./Right";
 import { Body } from "./Body";
-import { ListItem } from "./ListItem";
 import mapPropsToStyleNames from "../utils/mapPropsToStyleNames";
 
 const PREVIEW_OPEN_DELAY = 700;
@@ -88,10 +87,7 @@ class SwipeRow extends Component {
 
     // this check may not be necessary because we don't capture the move until we pass the threshold
     // just being extra safe here
-    if (
-      absDx > this.props.directionalDistanceChangeThreshold ||
-      absDy > this.props.directionalDistanceChangeThreshold
-    ) {
+    if (absDx > this.props.directionalDistanceChangeThreshold || absDy > this.props.directionalDistanceChangeThreshold) {
       // we have enough to determine direction
       if (absDy > absDx && !this.horizontalSwipeGestureBegan) {
         // user is moving vertically, do nothing, listView will handle
@@ -144,19 +140,13 @@ class SwipeRow extends Component {
     let toValue = 0;
     if (this._translateX._value >= 0) {
       // trying to open right
-      if (
-        this._translateX._value >
-        this.props.leftOpenValue * (this.props.swipeToOpenPercent / 100)
-      ) {
+      if (this._translateX._value > this.props.leftOpenValue * (this.props.swipeToOpenPercent / 100)) {
         // we're more than halfway
         toValue = this.props.leftOpenValue;
       }
     } else {
       // trying to open left
-      if (
-        this._translateX._value <
-        this.props.rightOpenValue * (this.props.swipeToOpenPercent / 100)
-      ) {
+      if (this._translateX._value < this.props.rightOpenValue * (this.props.swipeToOpenPercent / 100)) {
         // we're more than halfway
         toValue = this.props.rightOpenValue;
       }
@@ -184,8 +174,7 @@ class SwipeRow extends Component {
     Animated.spring(this._translateX, {
       toValue,
       friction: this.props.friction,
-      tension: this.props.tension,
-      useNativeDriver: true
+      tension: this.props.tension
     }).start(_ => {
       if (toValue === 0) {
         this.props.onRowDidClose && this.props.onRowDidClose();
@@ -210,40 +199,28 @@ class SwipeRow extends Component {
     // We don't want the onLayout func to run after it runs once.
     if (this.state.dimensionsSet) {
       return (
-				<Animated.View
-					{...this._panResponder.panHandlers}
-					style={{
-  transform: [{ translateX: this._translateX }],
-  zIndex: 2,
-}}
-				>
-					{!this.props.list
-						? <ListItem list style={this.props.listStyle}>
-								{this.props.body}
-							</ListItem>
-						: <View style={[{ backgroundColor: '#FFF' },this.props.listStyle]}>
-								{this.props.body}
-							</View>}
-				</Animated.View>
+        <Animated.View
+          {...this._panResponder.panHandlers}
+          style={{
+            transform: [{ translateX: this._translateX }],
+            zIndex: 2
+          }}
+        >
+          {this.props.body}
+        </Animated.View>
       );
     } else {
       return (
-				<Animated.View
-					{...this._panResponder.panHandlers}
-					onLayout={e => this.onContentLayout(e)}
-					style={{
-  transform: [{ translateX: this._translateX }],
-  zIndex: 2,
-}}
-				>
-					{!this.props.list
-						? <ListItem list style={this.props.listStyle}>
-								{this.props.body}
-							</ListItem>
-						: <View style={[{ backgroundColor: '#FFF' },this.props.listStyle]}>
-								{this.props.body}
-							</View>}
-				</Animated.View>
+        <Animated.View
+          {...this._panResponder.panHandlers}
+          onLayout={e => this.onContentLayout(e)}
+          style={{
+            transform: [{ translateX: this._translateX }],
+            zIndex: 2
+          }}
+        >
+          {this.props.body}
+        </Animated.View>
       );
     }
     return (
@@ -277,18 +254,14 @@ class SwipeRow extends Component {
             {
               height: this.state.hiddenHeight,
               flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between'
+              flexDirection: "row",
+              justifyContent: "space-between"
             }
           ]}
         >
-          <Left style={{ width: this.props.leftOpenValue, zIndex: 1 }}>
-            {this.props.left}
-          </Left>
+          <Left style={{ width: this.props.leftOpenValue, zIndex: 1 }}>{this.props.left}</Left>
           <Body style={{ flex: 0 }} />
-          <Right style={{ width: -this.props.rightOpenValue, zIndex: 1 }}>
-            {this.props.right}
-          </Right>
+          <Right style={{ width: -this.props.rightOpenValue, zIndex: 1 }}>{this.props.right}</Right>
         </View>
         {this.renderMainContent()}
       </View>

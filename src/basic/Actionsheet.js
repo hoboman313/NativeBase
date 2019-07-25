@@ -126,7 +126,8 @@ class ActionSheetContainer extends Component {
                     <Text
                       style={[
                         this.state.textStyle,
-                        this.state.cancelButtonIndex === index && this.state.cancelButtonStyle
+                        this.state.cancelButtonIndex === index &&
+                          this.state.cancelButtonStyle
                       ]}
                     >
                       {item}
@@ -163,8 +164,8 @@ class ActionSheetContainer extends Component {
                     </Body>
                     <Right />
                   </ListItem>
-                )
-              }
+                );
+              }}
             />
           </TouchableOpacity>
         </TouchableOpacity>
@@ -175,7 +176,11 @@ class ActionSheetContainer extends Component {
 
 ActionSheetContainer.propTypes = {
   ...ViewPropTypes,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.array
+  ])
 };
 
 const styles = StyleSheet.create({
@@ -201,9 +206,6 @@ const styles = StyleSheet.create({
   listItemBody: {
     borderColor: commonColor.listItemBorderColor,
     paddingLeft: commonColor.marginLeft / 2
-  },
-  touchableText: {
-    color: commonColor.touchableTextColor
   }
 });
 

@@ -17,7 +17,8 @@ class IconNB extends Component {
 
   setIcon(iconType) {
     if (iconType == undefined && this.context.theme) {
-      iconType = this.context.theme['@@shoutem.theme/themeStyle'].variables.iconFamily;
+      iconType = this.context.theme['@@shoutem.theme/themeStyle'].variables
+        .iconFamily;
     }
     switch (iconType) {
     case 'Ionicons':
@@ -41,10 +42,18 @@ class IconNB extends Component {
 }
 
 IconNB.propTypes = {
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.array
+  ]),
   type: PropTypes.oneOf(['Ionicons'])
 };
 
-const StyledIconNB = connectStyle('NativeBase.IconNB', {}, mapPropsToStyleNames)(IconNB);
+const StyledIconNB = connectStyle(
+  'NativeBase.IconNB',
+  {},
+  mapPropsToStyleNames
+)(IconNB);
 
 export { StyledIconNB as IconNB };

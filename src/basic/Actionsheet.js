@@ -99,12 +99,16 @@ class ActionSheetContainer extends Component {
             this.state.callback(this.state.cancelButtonIndex);
             this.setState({ modalVisible: false });
           }}
-          style={[styles.containerTouchable,
-              this.state.containerStyle]}
+          style={[styles.containerTouchable, this.state.containerStyle]}
         >
-          <TouchableOpacity activeOpacity={1} style={[styles.innerTouchable, this.state.containerStyle]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={[styles.innerTouchable, this.state.containerStyle]}
+          >
             {this.state.title ? (
-              <Text style={[styles.touchableText, this.state.titleStyle]}>{this.state.title}</Text>
+              <Text style={[styles.touchableText, this.state.titleStyle]}>
+                {this.state.title}
+              </Text>
             ) : null}
             <FlatList
               style={[
@@ -157,10 +161,15 @@ class ActionSheetContainer extends Component {
                       />
                     </Left>
                     <Body style={styles.listItemBody}>
-                      <Text style={[
+                      <Text
+                        style={[
                           this.state.textStyle,
-                          this.state.cancelButtonIndex === index && this.state.cancelButtonStyle
-                        ]}>{item.text}</Text>
+                          this.state.cancelButtonIndex === index &&
+                            this.state.cancelButtonStyle
+                        ]}
+                      >
+                        {item.text}
+                      </Text>
                     </Body>
                     <Right />
                   </ListItem>

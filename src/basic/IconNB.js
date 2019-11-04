@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connectStyle } from 'native-base-shoutem-theme';
+import { get } from 'lodash';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
@@ -16,17 +17,12 @@ class IconNB extends Component {
   }
 
   setIcon(iconType) {
-    if (iconType == undefined && this.context.theme) {
+    if (iconType === undefined && get(this, 'context.theme')) {
+      // eslint-disable-next-line
       iconType = this.context.theme['@@shoutem.theme/themeStyle'].variables
         .iconFamily;
     }
-    switch (iconType) {
-    case 'Ionicons':
-      this.Icon = Ionicons;
-      break;
-    default:
-      this.Icon = Ionicons;
-    }
+    this.Icon = Ionicons;
   }
 
   // eslint-disable-next-line camelcase
@@ -42,11 +38,6 @@ class IconNB extends Component {
 }
 
 IconNB.propTypes = {
-  style: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.number,
-    PropTypes.array
-  ]),
   type: PropTypes.oneOf(['Ionicons'])
 };
 

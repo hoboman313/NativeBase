@@ -99,7 +99,7 @@ class ActionSheetContainer extends Component {
             this.state.callback(this.state.cancelButtonIndex);
             this.setState({ modalVisible: false });
           }}
-          style={[styles.containerTouchable, this.state.containerStyle]}
+          style={styles.containerTouchable}
         >
           <TouchableOpacity
             activeOpacity={1}
